@@ -20,24 +20,36 @@ const EL = {
   // other within sections
   question: $('.js-question'),
   options: $('.js-options'), 
+  response: $('.js-form-response'),
   // buttons
   startButton: $('.fa-play-circle'),
-  // add restart button
-  // add submit button
-  // add next button
+  restartButton: $('.js-restart-button'),
+  submitButton: $('.js-submit-button'),
+  nextButton: $('.js-next-button'),
+
 };
 
-function submitAnswer() {
+function submitAnswer(questionIndex) {
   // read index # of selected answer from radio, submit to STORE as answer
-  // render
+  STORE.questions[STORE.currentQuestion].response = questionIndex; 
+  // render 
+  render(); 
 }
 
 // select the next Q&A pair, render those (i.e. take data from store and push to HTML)
 // status of Q&A pair may be ready-to-answer, or already answered and ready to click next
 function renderQandA() {
-  // read from the store to see where we are, e.g. 10 Qs, 0 answered, so we start on question 0 (index #)
-  // get Q by index # and html.text() to write question
-  EL.question.text(STORE.questions[STORE.currentQuestion]);
+  EL.question.text(STORE.questions[STORE.currentQuestion].q); // populates the h3 with the question 
+  let allOptions = ''; 
+  for(let i = 0; i < STORE.questions[STORE.currentQuestion].options.length; i++ ){
+    allOptions += `
+        <li data-index='${i}'>
+          <input type="radio" name="js-radio" value=${i}>${STORE.questions[STORE.currentQuestion].options[i]}</input>
+        </li>
+    `; 
+  }
+  EL.options.html(allOptions); 
+
   // same thing with answers
   // include the index # on the actual radio input for answers
 
@@ -59,7 +71,20 @@ function render() {
     renderQandA();
     EL.start.addClass('hidden');
     EL.end.addClass('hidden');
-    EL.questions.removeClass('hidden'); 
+    EL.questions.removeClass('hidden');
+    if (!STORE.questions[STORE.currentQuestion].response){
+      EL.nextButton.addClass('hidden'); 
+      EL.submitButton.removeClass('hidden'); 
+      EL.response.text(""); 
+    } else {
+      EL.nextButton.removeClass('hidden'); 
+      EL.submitButton.addClass('hidden'); 
+      if (STORE.questions[STORE.currentQuestion].response === STORE.questions[STORE.currentQuestion].a){
+        EL.response.text("You got that one correct!"); 
+      } else {
+        EL.response.text("You did not get that question correct"); 
+      }
+    }
   } else if (STORE.displayStatus === 'end') {
     renderAnswers();
     EL.start.addClass('hidden');
@@ -78,11 +103,44 @@ function handleStartButton(){
   });
 }
 
+
+function handleSubmitButton() {
+  EL.submitButton.on('click', function(event){
+    event.preventDefault()
+    STORE.displayStatus = 'questions';
+    const questionIndex = parseInt($('input[name="js-radio"]:checked').val(), 10);    
+    submitAnswer(questionIndex);
+  });
+}
+
+function handleRestartButton(){
+  EL.restartButton.on('click', function(event){
+    STORE.displayStatus = 'start';
+    STORE.currentQuestion = 0; 
+    for(let i = 0; i < STORE.questions.length; i++){
+      STORE.questions[i].response = null; 
+    }
+    render(); 
+  });
+}
+
+function handleNextButton() {
+  EL.nextButton.on('click', function(event){
+    if ( STORE.currentQuestion < STORE.questions.length - 1 ) {
+      STORE.displayStatus = 'questions';      
+      STORE.currentQuestion ++;
+    } else {
+      STORE.displayStatus = 'end';      
+    }
+    render(); 
+  });
+}
+
 function applyEventListeners() {
   handleStartButton(); 
-  // re-start button (only 1 of those)
-  // submit button (read current Q# from STORE, submit answer from DOM)
-  // next button
+  handleSubmitButton();
+  handleRestartButton();
+  handleNextButton();
 }
 
 $(render);
