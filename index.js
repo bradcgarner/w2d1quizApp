@@ -5,9 +5,10 @@ const STORE = {
 // need at least 5 questions
   displayStatus: 'start', // options are start, question, end
   currentQuestion: 0,
+  totalCorrect: 0, 
   questions: [
-    { q: 'a Q', a: 3 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null},
-    { q: 'a Q', a: 2 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null}, 
+    { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
+    { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}, 
   ]
 };
 
@@ -21,18 +22,18 @@ const EL = {
   question: $('.js-question'),
   options: $('.js-options'), 
   response: $('.js-form-response'),
+  finalScore: $('.js-final-score'), 
   // buttons
   startButton: $('.fa-play-circle'),
   restartButton: $('.js-restart-button'),
   submitButton: $('.js-submit-button'),
   nextButton: $('.js-next-button'),
-
 };
 
 function submitAnswer(questionIndex) {
   // read index # of selected answer from radio, submit to STORE as answer
-  STORE.questions[STORE.currentQuestion].response = questionIndex; 
-  // render 
+  STORE.questions[STORE.currentQuestion].response = questionIndex;
+  STORE.questions[STORE.currentQuestion].correct = (questionIndex === STORE.questions[STORE.currentQuestion].a) ? 1 : 0; 
   render(); 
 }
 
@@ -42,20 +43,35 @@ function renderQandA() {
   EL.question.text(STORE.questions[STORE.currentQuestion].q); // populates the h3 with the question 
   let allOptions = ''; 
   for(let i = 0; i < STORE.questions[STORE.currentQuestion].options.length; i++ ){
+    let liStart = '';
+    let liEnd = '';
+    let liClass = ''; 
+    if (STORE.questions[STORE.currentQuestion].response === null){
+      console.log(STORE.questions[STORE.currentQuestion].response); 
+      liStart = `<input type="radio" name="js-radio" value=${i}>`;
+      liEnd = `</input>`;
+    } else { 
+      liClass = (STORE.questions[STORE.currentQuestion].a === i) ? "class='correct'" : "class='incorrect'";
+    }
     allOptions += `
-        <li data-index='${i}'>
-          <input type="radio" name="js-radio" value=${i}>${STORE.questions[STORE.currentQuestion].options[i]}</input>
+        <li data-index='${i}' ${liClass}>
+          ${liStart}${STORE.questions[STORE.currentQuestion].options[i]}${liEnd}
         </li>
     `; 
   }
   EL.options.html(allOptions); 
-
   // same thing with answers
   // include the index # on the actual radio input for answers
-
 }
 
 function renderAnswers() {
+  STORE.totalCorrect = 0; 
+  for(let i = 0; i < STORE.questions.length; i++){
+    STORE.totalCorrect += STORE.questions[i].correct; 
+  }
+  const finalScore = `Congratulations! You got ${STORE.totalCorrect} out of ${STORE.questions.length} correct!`;
+  EL.finalScore.text(finalScore); 
+
   // populate HTML with all the Q&A
   // we might hide this, and then just let the user decide to show
 }
@@ -72,18 +88,20 @@ function render() {
     EL.start.addClass('hidden');
     EL.end.addClass('hidden');
     EL.questions.removeClass('hidden');
-    if (!STORE.questions[STORE.currentQuestion].response){
+    if (STORE.questions[STORE.currentQuestion].response === null){ // if there is no response
       EL.nextButton.addClass('hidden'); 
       EL.submitButton.removeClass('hidden'); 
       EL.response.text(""); 
-    } else {
+    } else {         // if there IS a response
       EL.nextButton.removeClass('hidden'); 
       EL.submitButton.addClass('hidden'); 
       if (STORE.questions[STORE.currentQuestion].response === STORE.questions[STORE.currentQuestion].a){
-        EL.response.text("You got that one correct!"); 
+        EL.response.text("You got that one correct!"); // enhance this: change text to html & maniupulate classes
       } else {
         EL.response.text("You did not get that question correct"); 
       }
+      // replace the radio buttons with a normal li
+      // manipulate classes to graphically indicate right & wrong answers
     }
   } else if (STORE.displayStatus === 'end') {
     renderAnswers();
@@ -116,9 +134,11 @@ function handleSubmitButton() {
 function handleRestartButton(){
   EL.restartButton.on('click', function(event){
     STORE.displayStatus = 'start';
-    STORE.currentQuestion = 0; 
+    STORE.currentQuestion = 0;
+    STORE.totalCorrect = 0;  
     for(let i = 0; i < STORE.questions.length; i++){
-      STORE.questions[i].response = null; 
+      STORE.questions[i].response = null;
+      STORE.questions[i].correct = 0;  
     }
     render(); 
   });

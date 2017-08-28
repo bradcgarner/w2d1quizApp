@@ -5,3 +5,11 @@
 li {
   display: block; 
 }
+
+.correct {
+  color: green; 
+}
+
+.incorrect {
+  color: red; 
+}
