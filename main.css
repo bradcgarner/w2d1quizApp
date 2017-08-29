@@ -10,19 +10,21 @@ h1, h2, h3, p {
   margin-top: 10px; }
 
 h1 {
-  font-size: 18px; }
+  font-size: 30px;
+  font-weight: bold; }
 
 main {
-  padding: 50px; }
+  padding: 100px; }
 
 .center {
   text-align: center; }
 
-.hidden {
-  display: none; }
+.left {
+  text-align: left; }
 
 .form-response {
-  height: 1.5em; }
+  height: 1.5em;
+  margin-top: 40px; }
 
 button {
   margin: 20px auto;
@@ -34,7 +36,9 @@ button {
   button.start-button {
     display: block;
     margin: auto;
+    margin-top: 70px;
     text-align: center;
+    border-radius: 9px;
     background-color: #3A7F46;
     width: 80%;
     padding: 15px 35px; }
@@ -73,11 +77,33 @@ button {
   margin: auto;
   text-align: center; }
 
+.answers {
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block; }
+
 .correct {
-  color: green; }
+  color: #3A7F46; }
+
+.end-check {
+  position: relative;
+  bottom: 20px;
+  font-size: 40px !important;
+  color: #3A7F46;
+  margin-bottom: 20px !important; }
+
+.end-times {
+  position: relative;
+  bottom: 20px;
+  font-size: 40px !important;
+  color: #7E0F0C;
+  margin-bottom: 20px !important; }
+
+.finalAnswers {
+  margin-top: 30px; }
 
 .incorrect {
-  color: red; }
+  color: #7E0F0C; }
 
 input {
   margin-right: 10px; }
@@ -85,8 +111,23 @@ input {
 li {
   display: block; }
 
+.left-spacing {
+  margin-left: 44px; }
+
+ul {
+  margin-left: 20px;
+  display: inline-block;
+  width: 150px; }
+
 .mySelection {
-  text-decoration: underline; }
+  position: relative;
+  left: -14px; }
+
+.mySelection:before {
+  font-family: FontAwesome;
+  content: '\f061';
+  position: relative;
+  left: -5px; }
 
 .js-status-bar-container {
   display: block;
@@ -101,16 +142,16 @@ li {
   position: absolute;
   top: 0;
   left: 0;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #6A6868;
   z-index: -1; }
 
 .js-status-line {
   width: 100vw;
-  height: 16.2px;
+  height: 18.2px;
   position: absolute;
   top: 0;
   right: 50%;
-  border-bottom: 6px solid black;
+  border-bottom: 6px solid #6A6868;
   z-index: -1; }
 
 .statusBarIcon-container {
@@ -125,7 +166,7 @@ li {
   text-align: center;
   height: 30px;
   width: 30px;
-  background-color: gray;
+  background-color: #6A6868;
   border-radius: 50%; }
   .statusBarIcon .fa {
     font-size: 22.5px;
@@ -152,5 +193,8 @@ li {
   display: inline-block;
   margin-left: auto;
   margin-right: auto; }
+
+.hidden {
+  display: none; }
 
 /*# sourceMappingURL=main.css.map */

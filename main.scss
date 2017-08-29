@@ -8,6 +8,7 @@ $restart-back: $submit-back;
 $restart-font: white;
 $answers-back: $next-back;
 $answers-font: white;
+$line-color: #6A6868; 
 
 $our-red: #7E0F0C;
 
@@ -25,7 +26,7 @@ $answers-font-hover: darken($answers-font, 10%);
 $status-container-ht: 30px;
 $status-icon-ht: $status-container-ht;
 $status-line-constant-ht: 0.54 * $status-container-ht;
-$status-line-ht: 0.54 * $status-container-ht;
+$status-line-ht: (0.54 * $status-container-ht) + 2;
 $status-icon-font: 0.75 * $status-container-ht;
 $statusBarFa-margin-top: 3px;
 
@@ -44,22 +45,24 @@ h1, h2, h3, p {
   margin-top: 10px;
 }
 h1 {
-  font-size: 18px;
+  font-size: 30px;
+  font-weight: bold; 
 }
 main {
-  padding: 50px; 
+  padding: 100px; 
 }
 
 .center {
   text-align: center; 
 }
 
-.hidden {
-  display: none; 
+.left {
+  text-align: left; 
 }
 
 .form-response {
   height: 1.5em;
+  margin-top: 40px; 
 }
 
 button {
@@ -72,7 +75,9 @@ button {
   &.start-button {
     display: block;
     margin: auto;
+    margin-top: 70px; 
     text-align: center;
+    border-radius: 9px;
     background-color: $start-back;
     width: 80%;
     padding: 15px 35px;
@@ -125,12 +130,38 @@ button {
 
 // ~~~~~~~~~~~~~~~~~~~~~~~ ANSWERS ~~~~~~~~~~~~~~~~~~~~
 
+.answers {
+  margin-left: auto; 
+  margin-right: auto;
+  display: inline-block;  
+}
+
 .correct {
-  color: green; 
+  color: $submit-back; 
+}
+
+.end-check {
+  position: relative; 
+  bottom: 20px; 
+  font-size: 40px !important;
+  color: $submit-back;
+  margin-bottom: 20px !important;
+}
+
+.end-times {
+  position: relative; 
+  bottom: 20px; 
+  font-size: 40px !important;
+  color: $our-red; 
+  margin-bottom: 20px !important;
+}
+
+.finalAnswers {
+  margin-top: 30px; 
 }
 
 .incorrect {
-  color: red; 
+  color: $our-red; 
 }
 
 input {
@@ -141,8 +172,26 @@ li {
   display: block; 
 }
 
+.left-spacing {
+  margin-left: 44px; 
+}
+
+ul {
+  margin-left: 20px; 
+  display: inline-block; 
+  width: 150px; 
+}
+
 .mySelection {
-  text-decoration: underline;
+  position: relative; 
+  left: -14px; 
+}
+
+.mySelection:before {
+  font-family: FontAwesome; 
+  content: '\f061'; 
+  position: relative; 
+  left: -5px; 
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~ STATUS BAR ~~~~~~~~~~~~~~~~~~~~
@@ -161,7 +210,7 @@ li {
   position: absolute;
   top: 0;
   left: 0;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid $line-color;
   z-index: -1;
 }
 
@@ -171,7 +220,7 @@ li {
   position: absolute;
   top: 0;
   right: 50%;
-  border-bottom: 6px solid black;
+  border-bottom: 6px solid $line-color;
   z-index: -1;
 }
 .statusBarIcon-container {
@@ -187,7 +236,7 @@ li {
   text-align: center;
   height: $status-icon-ht;
   width: $status-icon-ht;
-  background-color: gray;
+  background-color: $line-color;
   border-radius: 50%;
   .fa { // font-awesome icons
     font-size: $status-icon-font;
@@ -227,4 +276,11 @@ li {
   display: inline-block; 
   margin-left: auto; 
   margin-right: auto; 
+}
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~ HIDDEN ~~~~~~~~~~~~~~~~~~~~
+
+.hidden {
+  display: none; 
 }

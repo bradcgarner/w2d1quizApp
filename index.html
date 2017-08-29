@@ -13,7 +13,7 @@
 
       <section role="region" class="js-start hidden">
         <h1 class="center">CSS Quiz</h1>
-        <p>Welcome to our CSS quiz! Think you are an expert at CSS? Take our quiz to find out</p>
+        <p class="center">Welcome to our CSS quiz! Think you are an expert at CSS? Take our quiz to find out</p>
         <button class="js-start-button start-button">
           <div class="start-button-interior">
             <i class="fa fa-play-circle" aria-hidden="true"></i>
@@ -29,7 +29,7 @@
         <h3 class="js-form-response form-response center"></h3>
         <h3 class="js-question"></h3>  
         <form class="question-form">
-          <ul class="js-options"></ul>
+          <ul class="js-options options" role="radiogroup"></ul><br />
           <button class="js-submit-button submit">Submit</button>
         </form>
         <button class="js-next-button next">Next</button> 
@@ -41,9 +41,10 @@
           <div class="button-container">
             <button class="js-restart-button restart">Try Again</button>       
             <button class='js-answers-button answers all'>Show All My Responses</button>
-            <button class='js-answers-button answers correct'>Just Show Me What I Got Wrong</button>
-          </div>
-          <article class="js-answers"></article>
+            <button class='js-answers-button js-correct answers correct'>Just Show Me What I Got Wrong</button>
+            <br />
+            <article class="js-answers answers"></article>
+        </div>
         </section>
     </main>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="

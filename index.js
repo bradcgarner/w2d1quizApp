@@ -6,16 +6,18 @@ const STORE = {
   currentQuestion: 0,
   totalCorrect: 0, 
   questions: [
-    { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
-    { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}, 
-    { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
-    { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}, 
-    { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
-    { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}, 
-    { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
-    { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}, 
-    { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
-    { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}
+    { q: 'Which selector do you use to select an element\'s id?', a: 2 , options: ['.', '$', '#', '~'], response: null, correct: 0},
+    { q: 'What CSS style controls the size of a <p> element\'s font?', a: 1 , options: ['fontSize', 'font-size', 'text-size', 'textSize'], response: null, correct: 0}, 
+    { q: 'Which selector do you use to select an element\'s class?', a: 2 , options: ['$', '#', '.', '&'], response: null, correct: 0},
+    { q: 'Which of the options is not a valid pseudoclass?', a: 2 , options: ['a:link', 'p:hover', 'link:hover', 'a:visited'], response: null, correct: 0},
+    { q: 'In the box model, a border is between the padding and which of the options?', a: 2 , options: ['height', 'content', 'margin', 'the next element'], response: null, correct: 0}
+    // { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}, 
+    // { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
+    // { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}, 
+    // { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
+    // { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}, 
+    // { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
+    // { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}
   ]
 };
 
@@ -37,7 +39,8 @@ const EL = { // ID all DOM element event listeners here, not jQ littered everywh
   restartButton: $('.js-restart-button'),
   submitButton: $('.js-submit-button'),
   nextButton: $('.js-next-button'),
-  answersButton: $('.js-answers-button'),  
+  answersButton: $('.js-answers-button'),
+  correct: $('.js-correct')  
 };
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~ SUBMIT (USER INPUT TO STORE) ~~~~~~~~~~~~~~~~~~~~~~
@@ -46,6 +49,13 @@ function submitAnswer(questionIndex) {
   // read index # of selected answer from radio, submit to STORE as answer
   STORE.questions[STORE.currentQuestion].response = questionIndex;
   STORE.questions[STORE.currentQuestion].correct = (questionIndex === STORE.questions[STORE.currentQuestion].a) ? 1 : 0; 
+  if (STORE.currentQuestion === (STORE.questions.length -1)){
+    console.log("IT RAN"); 
+     EL.nextButton.text("Finish");  
+  }
+  else {
+    EL.nextButton.text("Next");
+  }
   render(); 
 }
 
@@ -61,10 +71,12 @@ function renderQandA() {
     let liEnd = '';
     let liClass = ''; 
     if (STORE.questions[STORE.currentQuestion].response === null){
-      liStart = `<input type="radio" name="js-radio" id="${i}" value=${i} required><label for="${i}">`;
+      liStart = `<input type="radio" name="js-radio" id="${i}" value=${i} role="radio" aria-checked="false"><label for="${i}">`;
       liEnd = '</label></input>';
+      EL.options.removeClass("left-spacing"); 
     } else { 
       liClass = (STORE.questions[STORE.currentQuestion].a === i) ? 'class="correct"' : 'class="incorrect"';
+      EL.options.addClass("left-spacing"); 
     }
     allOptions += `
         <li data-index='${i}' ${liClass}>
@@ -116,12 +128,16 @@ function renderEnd() {
     EL.trophyContainer.html(`
       <img src="./trophy.png" alt="Trophy" class="trophy">
     `);
+    EL.correct.addClass("hidden"); 
+  }
+  else {
+    EL.correct.removeClass("hidden"); 
   }
 }
 
-function render1AnswerHtml(questionObj){
-  let correct = questionObj.correct === 1 ? '<p>Correct</p>' : '<p>Incorrect</p>' ;
-  let html = `<h3 class='finalAnswers'>${questionObj.q}</h3>${correct}<ul>`;
+function render1AnswerHtml(questionObj, counter){
+  let correct = questionObj.correct === 1 ? '<i class="fa fa-check end-check" aria-hidden="true"></i>' : '<i class="fa fa-times end-times" aria-hidden="true"></i>' ;
+  let html = `<h3 class='finalAnswers left'>${counter}. ${questionObj.q}</h3><div class="left"><ul class="left">`;
   for (let i=0; i<questionObj.options.length; i++) {
     let corrClass = (questionObj.a === i) ? 'correct' : 'incorrect' ;
     let myClass = (questionObj.response === i) ? 'mySelection' : '' ;
@@ -129,7 +145,7 @@ function render1AnswerHtml(questionObj){
     html += `
       <li data-index='${i}' ${liClass}>${questionObj.options[i]}</li>`;
   }
-  html += '</ul><BR>';
+  html += `</ul>${correct}</div><BR>`;
   return html;
 }
 
@@ -138,7 +154,7 @@ function renderAnswers(whichQs) {
   let answersHTML = '';
   for (let i=0; i<STORE.questions.length; i++) {
     if ( ( whichQs === 'incorrect' && STORE.questions[i].correct === 0 ) || whichQs === 'all') {
-      answersHTML += render1AnswerHtml(STORE.questions[i]);   
+      answersHTML += render1AnswerHtml(STORE.questions[i], i + 1);   
     }
   }
   EL.answers.html(answersHTML);
@@ -166,8 +182,12 @@ function render() {
       EL.submitButton.addClass('hidden'); 
       if (STORE.questions[STORE.currentQuestion].response === STORE.questions[STORE.currentQuestion].a){
         EL.response.text('You got that one correct!'); // enhance this: change text to html & maniupulate classes
+        EL.response.addClass('correct'); 
+        EL.response.removeClass('incorrect'); 
       } else {
         EL.response.text('You did not get that question correct'); 
+        EL.response.addClass('incorrect'); 
+        EL.response.removeClass('correct'); 
       }
       // replace the radio buttons with a normal li
       // manipulate classes to graphically indicate right & wrong answers
@@ -195,8 +215,13 @@ function handleSubmitButton() {
   EL.submitButton.on('click', function(event){
     event.preventDefault()
     STORE.displayStatus = 'questions';
-    const questionIndex = parseInt($('input[name="js-radio"]:checked').val(), 10);    
-    submitAnswer(questionIndex);
+    const questionIndex = parseInt($('input[name="js-radio"]:checked').val(), 10);  
+     if(isNaN(questionIndex)){
+       alert("Please select an answer to the question before submitting"); 
+     }
+     else {    
+      submitAnswer(questionIndex);
+     }
   });
 }
 
