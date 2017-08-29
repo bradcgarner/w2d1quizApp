@@ -2,7 +2,6 @@
 
 // this is where we will store ALL our data, no data saved in the DOM
 const STORE = {
-// need at least 5 questions
   displayStatus: 'start', // options are start, question, end
   currentQuestion: 0,
   questions: [
@@ -11,8 +10,7 @@ const STORE = {
   ]
 };
 
-// just list them all here, not jQ littered everywhere...
-const EL = {
+const EL = { // ID all DOM element event listeners here, not jQ littered everywhere...  
   // 3 main sections that we'll populate/render
   start: $('.js-start'), 
   questions: $('.js-questions'), 
@@ -21,13 +19,16 @@ const EL = {
   question: $('.js-question'),
   options: $('.js-options'), 
   response: $('.js-form-response'),
+  answers: $('.js-answers'),
   // buttons
   startButton: $('.fa-play-circle'),
   restartButton: $('.js-restart-button'),
   submitButton: $('.js-submit-button'),
   nextButton: $('.js-next-button'),
-
+  answersButton: $('.js-answers-button'),  
 };
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~ SUBMIT (USER INPUT TO STORE) ~~~~~~~~~~~~~~~~~~~~~~
 
 function submitAnswer(questionIndex) {
   // read index # of selected answer from radio, submit to STORE as answer
@@ -35,6 +36,8 @@ function submitAnswer(questionIndex) {
   // render 
   render(); 
 }
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~ RENDERERS (OUT OF STORE TO EL) ~~~~~~~~~~~~~~~~~~~~~~
 
 // select the next Q&A pair, render those (i.e. take data from store and push to HTML)
 // status of Q&A pair may be ready-to-answer, or already answered and ready to click next
@@ -48,16 +51,31 @@ function renderQandA() {
         </li>
     `; 
   }
-  EL.options.html(allOptions); 
-
-  // same thing with answers
-  // include the index # on the actual radio input for answers
-
+  EL.options.html(allOptions);
 }
 
-function renderAnswers() {
-  // populate HTML with all the Q&A
-  // we might hide this, and then just let the user decide to show
+function render1AnswerHtml(questionObj){
+  let liClass = questionObj.correct === 1 ? ' class="correct"' : ' class="incorrect"' ;
+  let html = `<h3 class='finalAnswers'>${questionObj.q}</h3><ul>`;
+    for (let i=1; x<questionObj.options.length; i++) {
+      html += `
+      <li data-index='${i}' ${liClass}>${questionObj.options[i]}</li>`
+    }
+  html += '</ul><BR>';
+  return html;
+}
+
+function renderAnswers(whichQs) {
+  let answersHTML = '';
+  for (let i=1; i<=STORE.questions.length; i++) {
+    switch(true) {
+    case  whichQs === 'incorrect' && STORE.questions[i].correct === 0:
+    case whichQs === 'all':
+      answersHTML += render1AnswerHtml(STORE.questions[i]); 
+      break;
+    }
+  }
+  EL.answers.html(answersHTML);
 }
 
 // read from the store to see where we are
@@ -75,14 +93,14 @@ function render() {
     if (!STORE.questions[STORE.currentQuestion].response){
       EL.nextButton.addClass('hidden'); 
       EL.submitButton.removeClass('hidden'); 
-      EL.response.text(""); 
+      EL.response.text(''); 
     } else {
       EL.nextButton.removeClass('hidden'); 
       EL.submitButton.addClass('hidden'); 
       if (STORE.questions[STORE.currentQuestion].response === STORE.questions[STORE.currentQuestion].a){
-        EL.response.text("You got that one correct!"); 
+        EL.response.text('You got that one correct!'); 
       } else {
-        EL.response.text("You did not get that question correct"); 
+        EL.response.text('You did not get that question correct'); 
       }
     }
   } else if (STORE.displayStatus === 'end') {
@@ -95,6 +113,7 @@ function render() {
   }
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~ EVENT LISTENER HANDLERS ~~~~~~~~~~~~~~~~~~~~~~
 
 function handleStartButton(){
   EL.startButton.on('click', function(event){
@@ -102,7 +121,6 @@ function handleStartButton(){
     render(); 
   });
 }
-
 
 function handleSubmitButton() {
   EL.submitButton.on('click', function(event){
@@ -136,45 +154,22 @@ function handleNextButton() {
   });
 }
 
+function handleAnswersButton() {
+  EL.answersButton.on('click', function(event){
+    let whichQs = $(this).hasClass('all') ? 'all' : 'incorrect';
+    renderAnswers(whichQs); 
+  });
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~ DOCUMENT READY FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~
+
 function applyEventListeners() {
   handleStartButton(); 
   handleSubmitButton();
   handleRestartButton();
   handleNextButton();
+  handleAnswersButton();
 }
 
 $(render);
 $(applyEventListeners);
-
-
-/*
-div for start screen
-general intro information
-button to start quiz
-
-div for question screen
-status bar (indicate total # of Qs, # completed, # correct, # incorrect)
-    to start, just show data (numbers)... graphics later...
-    not active - user cannot skip around
-show only 1 question at a time them
-div for question (re-render with js)  .text()
-div for multiple choice (js)
-   required
-   handle as a form
-   ARIA: must be able to enter / navigate with keyboard
-Buttons:
-   submit button:
-      shows the correct answer / compares with the user's answer
-      show the next button
-   next button: 
-      hidden if question not submitted
-      goes to next question, or end screen if last question
-   re-start button: 
-      clear store (none answered, etc., start over)
-      on render go back to start screen
-
-div for end screen (show completed quiz)
-final score (total # of Qs, # completed, # correct, # incorrect)
-button to show or hide list of all questions with answers
-   or only the incorrect questions & answers
-finish button (same as question screen's re-start button)*/
