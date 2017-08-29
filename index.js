@@ -22,7 +22,8 @@ const EL = {
   question: $('.js-question'),
   options: $('.js-options'), 
   response: $('.js-form-response'),
-  finalScore: $('.js-final-score'), 
+  finalScore: $('.js-final-score'),
+  trophyContainer: $('.js-trophy-container'), 
   // buttons
   startButton: $('.fa-play-circle'),
   restartButton: $('.js-restart-button'),
@@ -68,9 +69,16 @@ function renderAnswers() {
   STORE.totalCorrect = 0; 
   for(let i = 0; i < STORE.questions.length; i++){
     STORE.totalCorrect += STORE.questions[i].correct; 
-  }
-  const finalScore = `Congratulations! You got ${STORE.totalCorrect} out of ${STORE.questions.length} correct!`;
+  } 
+  const ratio = (STORE.totalCorrect)/(STORE.questions.length); 
+  console.log(ratio);
+  const finalScore = (ratio > 0.8) ? `Congratulations! You got ${STORE.totalCorrect} out of ${STORE.questions.length} correct!`: `You got ${STORE.totalCorrect} out of ${STORE.questions.length} correct. Keep studying!`;
   EL.finalScore.text(finalScore); 
+  if (ratio === 1){
+    EL.trophyContainer.html(`
+      <img src="./trophy.png" alt="Trophy" class="trophy">
+    `);
+  }
 
   // populate HTML with all the Q&A
   // we might hide this, and then just let the user decide to show

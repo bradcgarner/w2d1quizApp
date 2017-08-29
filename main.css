@@ -1,15 +1,34 @@
+.correct {
+  color: green; 
+}
+
+.center {
+  text-align: center; 
+}
+
 .hidden {
   display: none; 
+}
+
+.incorrect {
+  color: red; 
+}
+
+main {
+  padding: 50px; 
 }
 
 li {
   display: block; 
 }
 
-.correct {
-  color: green; 
+.trophy-container {
+  text-align: center; 
 }
 
-.incorrect {
-  color: red; 
+.trophy {
+  width: 150px; 
+  display: inline-block; 
+  margin-left: auto; 
+  margin-right: auto; 
 }
