@@ -22,6 +22,7 @@ const EL = { // ID all DOM element event listeners here, not jQ littered everywh
   response: $('.js-form-response'),
   finalScore: $('.js-final-score'), 
   answers: $('.js-answers'),
+  statusBar: $('.js-status-bar-container'),
   // buttons
   startButton: $('.fa-play-circle'),
   restartButton: $('.js-restart-button'),
@@ -67,6 +68,28 @@ function renderQandA() {
   // include the index # on the actual radio input for answers
 }
 
+function renderStatusBar() {
+  let html = '<div class="js-status-line"></div>';
+  let divWidth = 100 / STORE.questions.length; 
+  // loop thru all questions
+  for (let i=0; i<STORE.questions.length; i++) {
+    let done = (STORE.questions[i].response === null) ? 'done' : '';
+    let correct = (STORE.questions[i].correct === 1) ? 'correct' : 'incorrect';
+    let current = (STORE.currentQuestion === i) ? 'currentIcon' : '';
+    let icon = '<i class="fa fa-circle-thin" aria-hidden="true"></i>';
+    if (correct === 'correct') { 
+      icon = '<i class="fa fa-check-circle" aria-hidden="true"></i>';
+    } else if (correct === 'incorrect' && done === 'done') {
+      icon =     '<i class="fa fa-times-circle" aria-hidden="true"></i>';
+    }
+    // create one div with one dot
+    html += `<div class="statusBarIcon ${done} ${correct} ${current}" style="width:${divWidth}%;">${icon}</div>`;
+ 
+  }
+  EL.statusBar.html(html);
+
+}
+
 function renderEnd() {
   STORE.totalCorrect = 0; 
   for(let i = 0; i < STORE.questions.length; i++){
@@ -110,6 +133,7 @@ function render() {
     // if customization needed, insert here
   } else if (STORE.displayStatus === 'questions') {
     renderQandA();
+    renderStatusBar();
     EL.start.addClass('hidden');
     EL.end.addClass('hidden');
     EL.questions.removeClass('hidden');
