@@ -2,16 +2,16 @@
   color: green; 
 }
 
+.incorrect {
+  color: red; 
+}
+
 .center {
   text-align: center; 
 }
 
 .hidden {
   display: none; 
-}
-
-.incorrect {
-  color: red; 
 }
 
 main {
@@ -31,4 +31,37 @@ li {
   display: inline-block; 
   margin-left: auto; 
   margin-right: auto; 
+
+.mySelection {
+  text-decoration: underline;
+}
+
+.js-status-bar-container {
+  display: block;
+  position: relative;
+  height: 3em;
+  overflow: none;
+  width: 100%;
+}
+
+.js-status-line {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-bottom: 2px solid black;
+  z-index: -1;
+}
+
+.statusBarIcon {
+  display: inline-block;
+  float: left;
+  margin: 0 auto;
+  text-align: center;
+  height: 1.5em;
+  margin-top: 1em;
+}
+.done {
+
 }
