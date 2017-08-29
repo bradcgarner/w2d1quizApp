@@ -53,8 +53,8 @@ function renderQandA() {
     let liEnd = '';
     let liClass = ''; 
     if (STORE.questions[STORE.currentQuestion].response === null){
-      liStart = `<input type="radio" name="js-radio" value=${i}>`;
-      liEnd = '</input>';
+      liStart = `<input type="radio" name="js-radio" id="${i}" value=${i} required><label for="${i}">`;
+      liEnd = '</label></input>';
     } else { 
       liClass = (STORE.questions[STORE.currentQuestion].a === i) ? 'class="correct"' : 'class="incorrect"';
     }

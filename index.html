@@ -2,7 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Brad &amp; Jack's App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CSS Quiz</title>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">    
     <link rel="stylesheet" type="text/css" href="main.css">
     <script src="https://use.fontawesome.com/3e0bb75972.js"></script>
   </head>
@@ -10,29 +12,37 @@
     <main role="main">
 
       <section role="region" class="js-start hidden">
-        <h1>CSS Quiz</h1>
+        <h1 class="center">CSS Quiz</h1>
         <p>Welcome to our CSS quiz! Think you are an expert at CSS? Take our quiz to find out</p>
-        <i class="fa fa-play-circle" aria-hidden="true"></i>        
+        <button class="start-button">
+          <div class="start-button-interior">
+            <i class="fa fa-play-circle" aria-hidden="true"></i>
+            <span>Start</span>
+          </div>
+        </button>
+                
 
       </section>
 
       <section role="region" class="js-questions hidden">
         <div class="js-status-bar-container"></div>
-        <h3 class="js-form-response center"></h3>
+        <h3 class="js-form-response form-response center"></h3>
         <h3 class="js-question"></h3>  
         <form class="question-form">
           <ul class="js-options"></ul>
-          <button class="js-submit-button">Submit</button>
+          <button class="js-submit-button submit">Submit</button>
         </form>
-        <button class="js-next-button">Next</button> 
+        <button class="js-next-button next">Next</button> 
       </section>
         
       <section role="region" class="js-end hidden">
           <h3 class="js-final-score center"></h3>
-          <div class="js-trophy-container trophy-container"></div> 
-          <button class="js-restart-button">Try Again</button>       
-          <button class='js-answers-button all'>Show All My Responses</button>
-          <button class='js-answers-button correct'>Just Show Me What I Got Wrong</button>
+          <div class="js-trophy-container trophy-container"></div>
+          <div class="button-container">
+            <button class="js-restart-button restart">Try Again</button>       
+            <button class='js-answers-button answers all'>Show All My Responses</button>
+            <button class='js-answers-button answers correct'>Just Show Me What I Got Wrong</button>
+          </div>
           <article class="js-answers"></article>
         </section>
     </main>

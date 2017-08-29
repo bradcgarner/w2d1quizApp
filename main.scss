@@ -1,0 +1,185 @@
+$start-back: #3A7F46;
+$start-font: white;
+$submit-back: #3A7F46; // dark green
+$submit-font: white;
+$next-back: #3D444D; // gunmetal gray
+$next-font: white;
+$restart-back: $submit-back;
+$restart-font: white;
+$answers-back: $next-back;
+$answers-font: white;
+
+$start-back-hover: lighten($start-back, 10%);
+$start-font-hover: darken($start-font, 10%);
+$submit-back-hover: darken($submit-back, 10%);
+$submit-font-hover: darken($start-font, 10%);
+$next-back-hover: darken($next-back, 10%);
+$next-font-hover: darken($start-font, 10%);
+$restart-back-hover: darken($restart-back, 10%);
+$restart-font-hover: darken($start-font, 10%);
+$answers-back-hover: darken($answers-back, 10%);
+$answers-font-hover: darken($answers-font, 10%);
+
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Droid Sans', sans-serif;  
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~ GENERAL STYLING ~~~~~~~~~~~~~~~~~~~~
+h1, h2, h3, p {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+h1 {
+  font-size: 18px;
+}
+main {
+  padding: 50px; 
+}
+
+.center {
+  text-align: center; 
+}
+
+.hidden {
+  display: none; 
+}
+
+.form-response {
+  height: 1.5em;
+}
+
+button {
+  margin: 20px auto;
+  padding: 10px 15px;
+  border: 0px solid #ddd;
+  border-radius: 6px;
+  text-align: center;
+  width: 8em;
+  &.start-button {
+    display: block;
+    margin: auto;
+    text-align: center;
+    background-color: $start-back;
+    width: 80%;
+    padding: 15px 35px;
+    .start-button-interior {
+      display: block;
+      margin: auto;
+      text-align: center;
+      width: 110px;
+      .fa-play-circle, span {
+        display: inline-block;
+        color: $start-font;
+      }
+      .fa-play-circle {
+        font-size: 36px;
+        float: left;
+      }
+      span {
+        float: right;        
+        font-size: 30px;      
+      }
+    }
+  }
+  &.answers {
+    background-color: $answers-back;
+    color: $answers-font;
+    width: 19em;
+  }
+  &.restart {
+    background-color: $restart-back;
+    color: $restart-font;
+  }
+  &.next {
+    background-color: $next-back;
+    color: $next-font;
+  }
+  &.submit {
+    background-color: $submit-back;
+    color: $submit-font;
+    &:hover {
+      background-color: $submit-back-hover;
+      color: $submit-font-hover;
+    }
+  }
+}
+
+.button-container {
+  margin: auto;
+  text-align: center;
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~ ANSWERS ~~~~~~~~~~~~~~~~~~~~
+
+.correct {
+  color: green; 
+}
+
+.incorrect {
+  color: red; 
+}
+
+input {
+  margin-right: 10px;
+}
+
+li {
+  display: block; 
+}
+
+.mySelection {
+  text-decoration: underline;
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~ STATUS BAR ~~~~~~~~~~~~~~~~~~~~
+.js-status-bar-container {
+  display: block;
+  position: relative;
+  height: 3em;
+  overflow: none;
+  width: 100%;
+}
+
+.js-status-line {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-bottom: 2px solid black;
+  z-index: -1;
+}
+
+.statusBarIcon {
+  display: inline-block;
+  float: left;
+  margin: 0 auto;
+  text-align: center;
+  height: 1.5em;
+  margin-top: 1em;
+}
+
+.done {
+  
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~ TROPHY ~~~~~~~~~~~~~~~~~~~~
+
+.trophy-container {
+  margin: auto;
+  text-align: center; 
+  width: 50%;
+}
+
+.trophy {
+  padding: 30px;
+  width: 100%; 
+  display: inline-block; 
+  margin-left: auto; 
+  margin-right: auto; 
+}

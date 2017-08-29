@@ -1,48 +1,99 @@
-.correct {
-  color: green; 
-}
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Droid Sans', sans-serif;
+  font-size: 16px;
+  box-sizing: border-box; }
 
-.incorrect {
-  color: red; 
-}
+h1, h2, h3, p {
+  margin-bottom: 10px;
+  margin-top: 10px; }
 
-.center {
-  text-align: center; 
-}
-
-.hidden {
-  display: none; 
-}
+h1 {
+  font-size: 18px; }
 
 main {
-  padding: 50px; 
-}
+  padding: 50px; }
+
+.center {
+  text-align: center; }
+
+.hidden {
+  display: none; }
+
+.form-response {
+  height: 1.5em; }
+
+button {
+  margin: 20px auto;
+  padding: 10px 15px;
+  border: 0px solid #ddd;
+  border-radius: 6px;
+  text-align: center;
+  width: 8em; }
+  button.start-button {
+    display: block;
+    margin: auto;
+    text-align: center;
+    background-color: #3A7F46;
+    width: 80%;
+    padding: 15px 35px; }
+    button.start-button .start-button-interior {
+      display: block;
+      margin: auto;
+      text-align: center;
+      width: 110px; }
+      button.start-button .start-button-interior .fa-play-circle, button.start-button .start-button-interior span {
+        display: inline-block;
+        color: white; }
+      button.start-button .start-button-interior .fa-play-circle {
+        font-size: 36px;
+        float: left; }
+      button.start-button .start-button-interior span {
+        float: right;
+        font-size: 30px; }
+  button.answers {
+    background-color: #3D444D;
+    color: white;
+    width: 19em; }
+  button.restart {
+    background-color: #3A7F46;
+    color: white; }
+  button.next {
+    background-color: #3D444D;
+    color: white; }
+  button.submit {
+    background-color: #3A7F46;
+    color: white; }
+    button.submit:hover {
+      background-color: #2a5c33;
+      color: #e6e6e6; }
+
+.button-container {
+  margin: auto;
+  text-align: center; }
+
+.correct {
+  color: green; }
+
+.incorrect {
+  color: red; }
+
+input {
+  margin-right: 10px; }
 
 li {
-  display: block; 
-}
-
-.trophy-container {
-  text-align: center; 
-}
-
-.trophy {
-  width: 150px; 
-  display: inline-block; 
-  margin-left: auto; 
-  margin-right: auto; 
+  display: block; }
 
 .mySelection {
-  text-decoration: underline;
-}
+  text-decoration: underline; }
 
 .js-status-bar-container {
   display: block;
   position: relative;
   height: 3em;
   overflow: none;
-  width: 100%;
-}
+  width: 100%; }
 
 .js-status-line {
   width: 100%;
@@ -51,8 +102,7 @@ li {
   top: 0;
   left: 0;
   border-bottom: 2px solid black;
-  z-index: -1;
-}
+  z-index: -1; }
 
 .statusBarIcon {
   display: inline-block;
@@ -60,8 +110,18 @@ li {
   margin: 0 auto;
   text-align: center;
   height: 1.5em;
-  margin-top: 1em;
-}
-.done {
+  margin-top: 1em; }
 
-}
+.trophy-container {
+  margin: auto;
+  text-align: center;
+  width: 50%; }
+
+.trophy {
+  padding: 30px;
+  width: 100%;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto; }
+
+/*# sourceMappingURL=main.css.map */
