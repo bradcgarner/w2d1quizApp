@@ -1,11 +1,3 @@
-.hidden {
-  display: none; 
-}
-
-li {
-  display: block; 
-}
-
 .correct {
   color: green; 
 }
@@ -13,6 +5,32 @@ li {
 .incorrect {
   color: red; 
 }
+
+.center {
+  text-align: center; 
+}
+
+.hidden {
+  display: none; 
+}
+
+main {
+  padding: 50px; 
+}
+
+li {
+  display: block; 
+}
+
+.trophy-container {
+  text-align: center; 
+}
+
+.trophy {
+  width: 150px; 
+  display: inline-block; 
+  margin-left: auto; 
+  margin-right: auto; 
 
 .mySelection {
   text-decoration: underline;

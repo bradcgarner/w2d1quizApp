@@ -20,6 +20,7 @@ const EL = { // ID all DOM element event listeners here, not jQ littered everywh
   question: $('.js-question'),
   options: $('.js-options'), 
   response: $('.js-form-response'),
+  trophyContainer: $('.js-trophy-container'), 
   finalScore: $('.js-final-score'), 
   answers: $('.js-answers'),
   statusBar: $('.js-status-bar-container'),
@@ -94,9 +95,15 @@ function renderEnd() {
   STORE.totalCorrect = 0; 
   for(let i = 0; i < STORE.questions.length; i++){
     STORE.totalCorrect += STORE.questions[i].correct; 
-  }
-  const finalScore = `Congratulations! You got ${STORE.totalCorrect} out of ${STORE.questions.length} correct!`;
+  } 
+  const ratio = (STORE.totalCorrect)/(STORE.questions.length); 
+  const finalScore = (ratio > 0.8) ? `Congratulations! You got ${STORE.totalCorrect} out of ${STORE.questions.length} correct!`: `You got ${STORE.totalCorrect} out of ${STORE.questions.length} correct. Keep studying!`;
   EL.finalScore.text(finalScore); 
+  if (ratio === 1){
+    EL.trophyContainer.html(`
+      <img src="./trophy.png" alt="Trophy" class="trophy">
+    `);
+  }
 }
 
 function render1AnswerHtml(questionObj){
