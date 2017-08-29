@@ -8,6 +8,14 @@ const STORE = {
   questions: [
     { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
     { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}, 
+    { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
+    { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}, 
+    { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
+    { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}, 
+    { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
+    { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}, 
+    { q: 'a Q0', a: 2 , options: ['wrong', 'wrong', 'right', 'wrong'], response: null, correct: 0},
+    { q: 'a Q1', a: 1 , options: ['wrong', 'right', 'wrong', 'wrong'], response: null, correct: 0}
   ]
 };
 
@@ -25,7 +33,7 @@ const EL = { // ID all DOM element event listeners here, not jQ littered everywh
   answers: $('.js-answers'),
   statusBar: $('.js-status-bar-container'),
   // buttons
-  startButton: $('.fa-play-circle'),
+  startButton: $('.js-start-button'),
   restartButton: $('.js-restart-button'),
   submitButton: $('.js-submit-button'),
   nextButton: $('.js-next-button'),
@@ -70,22 +78,27 @@ function renderQandA() {
 }
 
 function renderStatusBar() {
-  let html = '<div class="js-status-line"></div>';
+  let html = '<div class="js-status-line-constant"></div>';
   let divWidth = 100 / STORE.questions.length; 
   // loop thru all questions
   for (let i=0; i<STORE.questions.length; i++) {
-    let done = (STORE.questions[i].response === null) ? 'done' : '';
-    let correct = (STORE.questions[i].correct === 1) ? 'correct' : 'incorrect';
+    let done = (STORE.questions[i].response === null) ? '' : 'doneIcon';
+    let correct = (STORE.questions[i].correct === 1) ? 'correctIcon' : 'incorrectIcon';
     let current = (STORE.currentQuestion === i) ? 'currentIcon' : '';
-    let icon = '<i class="fa fa-circle-thin" aria-hidden="true"></i>';
-    if (correct === 'correct') { 
-      icon = '<i class="fa fa-check-circle" aria-hidden="true"></i>';
-    } else if (correct === 'incorrect' && done === 'done') {
-      icon =     '<i class="fa fa-times-circle" aria-hidden="true"></i>';
+    let icon = '<i class="fa" aria-hidden="true"></i>';
+    if (correct === 'correctIcon') { 
+      icon = '<i class="fa fa-check" aria-hidden="true"></i>';
+    } else if (correct === 'incorrectIcon' && done === 'doneIcon') {
+      icon =     '<i class="fa fa-times" aria-hidden="true"></i>';
+    }
+    if ( current !== '') {
+      icon += '<div class="js-status-line"></div>';
     }
     // create one div with one dot
-    html += `<div class="statusBarIcon ${done} ${correct} ${current}" style="width:${divWidth}%;">${icon}</div>`;
- 
+    html += `<div class="statusBarIcon-container" style="width:${divWidth}%;">
+      <div class="statusBarIcon ${done} ${correct} ${current}">${icon}</div> 
+    </div>`;
+    // remember to put ${icon} back before </div> at end of line 99
   }
   EL.statusBar.html(html);
 

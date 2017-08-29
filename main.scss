@@ -9,6 +9,8 @@ $restart-font: white;
 $answers-back: $next-back;
 $answers-font: white;
 
+$our-red: #7E0F0C;
+
 $start-back-hover: lighten($start-back, 10%);
 $start-font-hover: darken($start-font, 10%);
 $submit-back-hover: darken($submit-back, 10%);
@@ -19,6 +21,13 @@ $restart-back-hover: darken($restart-back, 10%);
 $restart-font-hover: darken($start-font, 10%);
 $answers-back-hover: darken($answers-back, 10%);
 $answers-font-hover: darken($answers-font, 10%);
+
+$status-container-ht: 30px;
+$status-icon-ht: $status-container-ht;
+$status-line-constant-ht: 0.54 * $status-container-ht;
+$status-line-ht: 0.54 * $status-container-ht;
+$status-icon-font: 0.75 * $status-container-ht;
+$statusBarFa-margin-top: 3px;
 
 
 * {
@@ -137,17 +146,18 @@ li {
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~ STATUS BAR ~~~~~~~~~~~~~~~~~~~~
+
 .js-status-bar-container {
   display: block;
   position: relative;
-  height: 3em;
-  overflow: none;
+  height: $status-container-ht;
+  overflow: hidden;
   width: 100%;
 }
 
-.js-status-line {
+.js-status-line-constant { // child of js-status-bar-container; forms thin black line full width of status bar
   width: 100%;
-  height: 50%;
+  height: $status-line-constant-ht;
   position: absolute;
   top: 0;
   left: 0;
@@ -155,18 +165,53 @@ li {
   z-index: -1;
 }
 
-.statusBarIcon {
-  display: inline-block;
-  float: left;
+.js-status-line { // child of statusBarIcon; only present for 1 current icon; forms thick black line to left
+  width: 100vw;
+  height: $status-line-ht;
+  position: absolute;
+  top: 0;
+  right: 50%;
+  border-bottom: 6px solid black;
+  z-index: -1;
+}
+.statusBarIcon-container {
+  display: inline-block; 
   margin: 0 auto;
   text-align: center;
-  height: 1.5em;
-  margin-top: 1em;
+} // just overall container that sets uniform spacing, no contents other than .statusBarIcon
+
+.statusBarIcon { // just circles with color, contents are only fa icons
+  position: relative;
+  display: inline-block;
+  margin: 0 auto;
+  text-align: center;
+  height: $status-icon-ht;
+  width: $status-icon-ht;
+  background-color: gray;
+  border-radius: 50%;
+  .fa { // font-awesome icons
+    font-size: $status-icon-font;
+    color: white;
+    text-align: center;
+    z-index: 999;
+    margin-top: $statusBarFa-margin-top;
+    // &:before {
+    //   content: 'm';
+    // }
+  }
+  &.doneIcon {
+    &.correctIcon {
+      background-color: $submit-back;
+    }
+    &.incorrectIcon {
+      background-color: $our-red;
+    }
+  }
+}
+.fa:before {
+   content: '\00a0'; // added this to solve spacing catastrophe
 }
 
-.done {
-  
-}
 
 // ~~~~~~~~~~~~~~~~~~~~~~~ TROPHY ~~~~~~~~~~~~~~~~~~~~
 
