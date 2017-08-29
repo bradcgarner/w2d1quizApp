@@ -13,3 +13,7 @@ li {
 .incorrect {
   color: red; 
 }
+
+.mySelection {
+  text-decoration: underline;
+}
